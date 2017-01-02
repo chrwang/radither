@@ -44,7 +44,6 @@ public class RadiationTreatment {
 			afterReproduction();
 			number++;
 			afterOxygenation();
-			number++;
 		}
 
 	}
