@@ -125,6 +125,7 @@ public class RadiationTreatment implements Serializable {
             number++;
             //rebalance oxygenation ratios in the tumour.
             afterOxygenation();
+            number++;
         }
 
     }
