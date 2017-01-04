@@ -40,7 +40,7 @@ public class RadiationTreatment implements Serializable {
 
     //Variables used throughout the model
 
-    static final int numTreat = 50;
+    static final int numTreat = 40;
 
     //hit or extrapolation number for oxygenated cells
     static Double no = 4.0;
@@ -199,7 +199,7 @@ public class RadiationTreatment implements Serializable {
     static void afterReproduction() {
 
         //This accounts for a mitotic delay in cell division. Cells do not immediately divide.
-        double time = 1;
+        double time = 60;
         //oxygenated cells reproduce with rate alpha and then die after reproducing making those cells
         double deltaT = gamma * D;
         double truetime = time - deltaT;
