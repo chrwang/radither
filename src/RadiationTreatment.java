@@ -116,15 +116,45 @@ public class RadiationTreatment implements Serializable {
         //The treatment loop. Every increment of i represents one treatment. Performs numTreat number of treatments.
         for (int i = 0; i < numTreat; i++) {
             //Conduct the radiation treatment, calculates cell deaths
+            /**
+            System.out.println(liveox.get(liveox.size()-1));
+            System.out.println(deadox.get(liveox.size()-1));
+            System.out.println(liveanox.get(liveox.size()-1));
+            System.out.println(deadanox.get(liveox.size()-1));
+            */
             afterRadiation();
+            /**
+            System.out.println("*****************");
+            System.out.println(liveox.get(liveox.size()-1));
+            System.out.println(deadox.get(liveox.size()-1));
+            System.out.println(liveanox.get(liveox.size()-1));
+            System.out.println(deadanox.get(liveox.size()-1));
+            System.out.println("*****************");
+            */
             //increment the array index for data recording
             number++;
             //The cells attempt to divide. Dead cells removed, hypoxic don't divide, updates counts.
             afterReproduction();
+            /**
+            System.out.println(liveox.get(liveox.size()-1));
+            System.out.println(deadox.get(liveox.size()-1));
+            System.out.println(liveanox.get(liveox.size()-1));
+            System.out.println(deadanox.get(liveox.size()-1));
+            System.out.println("*****************");
+            */
             //increment the array index for data recording
             number++;
             //rebalance oxygenation ratios in the tumour.
             afterOxygenation();
+            /**
+            System.out.println(liveox.get(liveox.size()-1));
+            System.out.println(deadox.get(liveox.size()-1));
+            System.out.println(liveanox.get(liveox.size()-1));
+            System.out.println(deadanox.get(liveox.size()-1));
+            System.out.println("*****************");
+            System.out.println("*****************");
+            */
+            //increment the array index for data recording
             number++;
         }
 
@@ -132,22 +162,28 @@ public class RadiationTreatment implements Serializable {
 
     /**
      * Calculates the cell numbers after the radiation treatment is performed.
-     * No params, automatically puts values into the ArrayLists.
+     * No parameters are taken for this method.
+     * It automatically puts values into the ArrayLists.
      */
     static void afterRadiation() {
         //performs radiation calculations for oxygenated cell deaths
-        liveox.add(liveox.get(number) * (1 - Math.pow(1 - Math.pow(Math.E, D / Do), no)));
-        deadox.add(liveox.get(number) + deadox.get(number) - liveox.get(number + 1));
+        double lox = liveox.get(number) * (1 - Math.pow(1 - Math.pow(Math.E, -D / Do), no));
+        liveox.add(lox);
+        double dox = liveox.get(number) + deadox.get(number) - liveox.get(number + 1);
+        deadox.add(dox);
 
         //performs radiation calculations for hypoxic cell deaths
-        liveanox.add(liveanox.get(number) * (1 - Math.pow(1 - Math.pow(Math.E, D / Da), na)));
-        deadanox.add(liveanox.get(number) + deadanox.get(number) - liveanox.get(number + 1));
+        double lax = liveanox.get(number) * (1 - Math.pow(1 - Math.pow(Math.E, -D / Da), na));
+        liveanox.add(lax);
+        double dax = liveanox.get(number) + deadanox.get(number) - liveanox.get(number + 1);
+        deadanox.add(dax);
 
     }
 
     /**
      * Calculates the cell numbers after the cells attempt to reproduce.
-     * No params, automatically puts values into the ArrayLists.
+     * No parameters are taken for this method.
+     * It automatically puts values into the ArrayLists.
      */
     static void afterReproduction() {
 
@@ -170,8 +206,10 @@ public class RadiationTreatment implements Serializable {
     }
 
     /**
-     * Calculates the cell numbers after the cells rebalance the oxygenation-anoxic ratio.
-     * No params, automatically puts values into the ArrayLists.
+     * Calculates the cell numbers after the cells rebalance the oxygenated-anoxic cells ratio in the tumour. Depending
+     * on the direction of imbalance, cells transition from anoxic to oxygenated or from oxygenated to anoxic.
+     * No parameters are taken for this method.
+     * It automatically puts values into the ArrayLists.
      */
     static void afterOxygenation() {
         //Total number of cells at this point
@@ -183,6 +221,12 @@ public class RadiationTreatment implements Serializable {
         //Calculates the current ratio
         R_II = (liveox.get(number) + deadox.get(number)) / (liveanox.get(number) + deadanox.get(number));
 
+        /**
+        System.out.println(N_III);
+        System.out.println(R_III);
+        System.out.println(R_II);
+        */
+
         //Constant for ratio adjustment
         double L = N_III / ((1 + R_III) * (1 + liveanox.get(number) / deadanox.get(number)));
 
@@ -190,8 +234,8 @@ public class RadiationTreatment implements Serializable {
         double M = R_III * N_III / ((1 + R_III) * (1 + liveanox.get(number) / deadanox.get(number)));
 
         //Adjustment control sequence
-        if (R_III > R_II) { //If imbalance, RIII too large
-
+        if (Math.abs(R_III - R_II)>=.000001) { //Floating point things
+            //If imbalance, RIII too large
             //Reoxygenation of some anoxic live cells
             liveox.add(liveox.get(number) + liveanox.get(number) - liveanox.get(number) / deadanox.get(number) * L);
 
@@ -202,8 +246,8 @@ public class RadiationTreatment implements Serializable {
             liveanox.add(liveanox.get(number) / deadanox.get(number) * L);
             deadanox.add(L);
 
-        } else if (R_III < R_II) { //If imbalance, RIII too small
-
+        } else if (Math.abs(R_II - R_III)>=.000001) {//Floating point things
+            //If imbalance, RIII too small
             //Decrease in oxygenated cells
             liveox.add(liveox.get(number) / liveox.get(number) * M);
             deadox.add(M);
