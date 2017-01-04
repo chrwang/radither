@@ -1,5 +1,9 @@
 //Imports
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -95,8 +99,9 @@ public class RadiationTreatment implements Serializable {
      * the data in nicely formatted text files.
      *
      * @param args Command line arguments, currently unused
+     * @throws IOException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         //Initialise ArrayLists for keeping track of data
         liveox = new ArrayList<>();
@@ -157,6 +162,12 @@ public class RadiationTreatment implements Serializable {
             //increment the array index for data recording
             number++;
         }
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("output.out")));
+        for (int i = 0; i < liveox.size(); i++){
+        	out.println(i + ", " + liveox.get(i) + ", " + deadox.get(i) + ", " + liveanox.get(i) + ", " + deadanox.get(i) + ";");
+        }
+        out.close();
+        System.exit(0);
 
     }
 
