@@ -40,7 +40,7 @@ public class RadiationTreatment implements Serializable {
 
     //Variables used throughout the model
 
-    static final int numTreat = 40;
+    static final int numTreat = 50;
 
     //hit or extrapolation number for oxygenated cells
     static Double no = 4.0;
@@ -162,11 +162,25 @@ public class RadiationTreatment implements Serializable {
             //increment the array index for data recording
             number++;
         }
+
+        //Prepare files for printing
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("output.out")));
-        for (int i = 0; i < liveox.size(); i++){
-        	out.println(i + ", " + liveox.get(i) + ", " + deadox.get(i) + ", " + liveanox.get(i) + ", " + deadanox.get(i) + ";");
+        PrintWriter prop = new PrintWriter(new BufferedWriter(new FileWriter("prop.out")));
+
+        //Printing loop
+        for (int i = 0; i < liveox.size(); i+=3){
+            //Print out values in comma separated list for MATLAB
+        	out.println(i/3 + ", " + liveox.get(i) + ", " + deadox.get(i) + ", " + liveanox.get(i) + ", " + deadanox.get(i) + ";");
+        	prop.println((liveox.get(i)+deadox.get(i))/(liveanox.get(i)+deadanox.get(i)));
         }
+
+        //flush and close the buffer
+        out.flush();
         out.close();
+        prop.flush();
+        prop.close();
+
+        //Exit the program.
         System.exit(0);
 
     }
