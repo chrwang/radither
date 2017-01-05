@@ -5,7 +5,7 @@
 %
 % This assumes that this script is in the same directory as the text file.
 %% Initialize variables.
-filename = './output.out';
+filename = '/Users/kisaayano/projects/radither/output.out';
 delimiter = ',';
 
 %% Read columns of data as strings:
