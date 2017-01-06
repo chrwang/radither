@@ -72,7 +72,7 @@ figure; hold on
 p1=plot(output(1:51,1),output(1:51,2)); M1 = 'Live Oxygenated Cells';
 p2=plot(output(1:51,1),output(1:51,3)); M2 = 'Dead Oxygenated Cells';
 p3=plot(output(1:51,1),output(1:51,4)); M3 = 'Live Anoxic Cells';
-p4=plot(output(1:51,1),output(1:51,5)); M4 = 'Dead Anoixc Cells';
+p4=plot(output(1:51,1),output(1:51,5)); M4 = 'Dead Anoxic Cells';
 legend([p1;p2;p3;p4],M1, M2, M3, M4);
 xlabel('Treatment Number');
 ylabel('Number of Cells');
