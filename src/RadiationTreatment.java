@@ -81,7 +81,7 @@ public class RadiationTreatment implements Serializable {
     static int number = 0;
 
     //The radiation dose, in rads, for this treatment
-    static int D = 200;
+    static int D = 300;
 
     //Ratio of oxygenated to anoxic after reproduction.
     static double R_II;
@@ -164,7 +164,7 @@ public class RadiationTreatment implements Serializable {
         }
 
         //Prepare files for printing
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("output.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("output300rad.out")));
         PrintWriter prop = new PrintWriter(new BufferedWriter(new FileWriter("prop.out")));
 
         //Printing loop
