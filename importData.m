@@ -5,9 +5,8 @@
 %
 % This assumes that this script is in the same directory as the text file.
 %% Initialize variables.
-filename = '/Users/kisaayano/projects/radither/output.out';
+filename = '/Users/kisaayano/projects/radither/output100rad.out';
 delimiter = ',';
-
 %% Read columns of data as strings:
 % For more information, see the TEXTSCAN documentation.
 formatSpec = '%s%s%s%s%s%[^\n\r]';
@@ -76,7 +75,7 @@ p4=plot(output(1:51,1),output(1:51,5)); M4 = 'Dead Anoxic Cells';
 legend([p1;p2;p3;p4],M1, M2, M3, M4);
 xlabel('Treatment Number');
 ylabel('Number of Cells');
-title('Number of Various Types of Cells After Treatments');
+title('Number of Various Types of Cells After 100 Rad Treatments');
 
 %% Clear temporary variables
 clearvars filename delimiter formatSpec fileID dataArray ans raw col numericData rawData row regexstr result numbers invalidThousandsSeparator thousandsRegExp me;
